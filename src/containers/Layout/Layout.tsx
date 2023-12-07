@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react'
 import Carousel from "../Carousel/Carousel";
+import CircleMenu from '../Circle/CircleMenu';
 
 import * as Styled from './Layout.styles'
 
@@ -64,10 +65,12 @@ const dateItems: Array<TDateItem> = [
 const Layout: FC  = () => {
 
     const [state, setState] = useState<TDateItem>(dateItems[1])
+    const [activeButton, setActiveButton] = useState(1);
 
     return(
         <Styled.Container>
-            <Styled.Inner>
+            <CircleMenu activeButton={activeButton} setActiveButton={setActiveButton}/>
+            <Styled.Inner>    
                 <Carousel items={state?.items}/>
             </Styled.Inner>
         </Styled.Container>
