@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react'
+import CircleMenu from "../Circle/CircleMenu";
 import Carousel from "../Carousel/Carousel";
 
 import * as Styled from './Layout.styles'
@@ -9,7 +10,7 @@ export interface  IItems {
     description: string
 }
 
-interface TDateItem {
+export interface TDateItem {
     id: number
     name: string
     startDate: string
@@ -17,7 +18,7 @@ interface TDateItem {
     items: Array<IItems>
 }
 
-const dateItems: Array<TDateItem> = [
+export const dateItems: Array<TDateItem> = [
     {
         id: 1,
         name: 'Музыка',
@@ -58,17 +59,60 @@ const dateItems: Array<TDateItem> = [
                 description: 'Крепкий орешек/Die hard, США'
             }
         ]
-    }
+    },
+    {
+        id: 3,
+        name: 'Кек',
+        startDate: '2000',
+        endDate: '2001',
+        items: [
+            {
+                id: 1,
+                date: '2000',
+                description: 'music1'
+            }
+        ]
+    },
+    {
+        id: 4,
+        name: 'Кек',
+        startDate: '2000',
+        endDate: '2001',
+        items: [
+            {
+                id: 1,
+                date: '2000',
+                description: 'music1'
+            }
+        ]
+    },
+    {
+        id: 5,
+        name: 'Кек',
+        startDate: '2000',
+        endDate: '2001',
+        items: [
+            {
+                id: 1,
+                date: '2000',
+                description: 'music1'
+            }
+        ]
+    },
 ]
 
 const Layout: FC  = () => {
 
-    const [state, setState] = useState<TDateItem>(dateItems[1])
+    const [activeItem, setActiveItem] = useState<TDateItem>(dateItems[0])
 
     return(
         <Styled.Container>
+            <CircleMenu
+                activeItem={activeItem}
+                setActiveItem={setActiveItem}
+            />
             <Styled.Inner>
-                <Carousel items={state?.items}/>
+                <Carousel items={activeItem?.items}/>
             </Styled.Inner>
         </Styled.Container>
     )
