@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react'
 import Carousel from "../Carousel/Carousel";
 import CircleMenu from '../Circle/CircleMenu';
+import Header from '../../component/Header/Header';
 
 import * as Styled from './Layout.styles'
 
@@ -18,7 +19,7 @@ export interface TDateItem {
     items: Array<IItems>
 }
 
-export const dateItems: Array<TDateItem> = [
+const dateItems: Array<TDateItem> = [
     {
         id: 1,
         name: 'Музыка',
@@ -191,14 +192,14 @@ export const dateItems: Array<TDateItem> = [
 
 const Layout: FC  = () => {
 
-    const [state, setState] = useState<TDateItem>(dateItems[0])
-    const [activeButton, setActiveButton] = useState(1);
+    const [activeItem, setActiveItem] = useState<TDateItem>(dateItems[0])
 
     return(
         <Styled.Container>
-            <CircleMenu setState={setState} activeButton={activeButton} setActiveButton={setActiveButton}/>
+            <Header/>
+            <CircleMenu dateItems={dateItems} setActiveItem={setActiveItem} activeItem={activeItem}/>
             <Styled.Inner>    
-                <Carousel items={state?.items}/>
+                <Carousel items={activeItem?.items}/>
             </Styled.Inner>
         </Styled.Container>
     )
