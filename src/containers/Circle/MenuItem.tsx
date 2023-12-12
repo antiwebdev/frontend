@@ -7,7 +7,8 @@ interface MenuItemProps {
     isActive: boolean;
     onClick: () => void;
     position: { x: number; y: number };
-    className?: string
+    className?: string;
+    counterRotateAngle: number;
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({
@@ -16,13 +17,14 @@ const MenuItem: React.FC<MenuItemProps> = ({
     isActive,
     onClick,
     position,
-    className
+    className,
+    counterRotateAngle
 }) => {
     return (
         <Styled.MenuItemContainer
             className={className}
             isActive={isActive}
-            style={{ left: `calc(50% + ${position.x}%)`, top: `calc(50% + ${position.y}%)` }}
+            style={{ left: `calc(50% + ${position.x}%)`, top: `calc(50% + ${position.y}%)`, transform: `rotate(${counterRotateAngle}deg)` }}
             onClick={onClick}
         >
             <Styled.MenuItemIcon isActive={isActive}>

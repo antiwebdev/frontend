@@ -8,6 +8,6 @@ export const Container = styled.div`
 `;
 
 export const Inner = styled.div`
-  padding-left: 320px;
-  padding-right: 160px;
+  padding-left: 0px;
+  padding-right: 0px;
 `

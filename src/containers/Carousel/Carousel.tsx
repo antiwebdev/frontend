@@ -30,8 +30,6 @@ const Carousel: FC<TCarousel>  = ({
                 slidesPerView={3}
                 navigation
                 pagination={{ clickable: true }}
-                onSwiper={(swiper: any) => console.log(swiper)}
-                onSlideChange={() => console.log('slide change')}
             >
                 {
                     items.map((item) => (

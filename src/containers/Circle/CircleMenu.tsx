@@ -11,7 +11,7 @@ import gsap from 'gsap';
 
 import MenuItem from "./MenuItem";
 import { TDateItem } from "../Layout/Layout";
-import { dateItems } from "../Layout/Layout";
+
 
 import * as Styled from "./CircleMenu.styles";
 
@@ -19,7 +19,7 @@ import * as Styled from "./CircleMenu.styles";
 interface CircleMenuProps {
     activeItem: TDateItem;
     setActiveItem: Dispatch<SetStateAction<TDateItem>>;
-    // dateItems: Array<TDateItem>
+    dateItems: Array<TDateItem>
 }
 
 interface MenuItemType {
@@ -27,6 +27,7 @@ interface MenuItemType {
     buttonText: string;
     buttonId: number;
     categoryId: number;
+    counterRotateAngle: number;
 }
 
 const getRotationDegrees = (length: number, index: number, currentDegrees: number, activeItemId: number):number => {
@@ -52,13 +53,14 @@ const getRotationDegrees = (length: number, index: number, currentDegrees: numbe
 const CircleMenu: React.FC<CircleMenuProps> = ({
     activeItem,
     setActiveItem,
-    // dateItems
+    dateItems
 }) => {
     const [menuItems, setMenuItems] = useState<MenuItemType[]>([]);
     const [rotationDegrees, setRotationDegrees] = useState<number>(0)
 
     const container = useRef<any>();
     const circle = useRef<any>();
+    const dateItemsLength = dateItems.length;
 
     useLayoutEffect(() => {
 
@@ -82,14 +84,16 @@ const CircleMenu: React.FC<CircleMenuProps> = ({
             const angle = i * arc - (Math.PI / length);
             const x = radius * Math.cos(angle);
             const y = radius * Math.sin(angle);
-            return { buttonText: item.name, buttonId: item.id, position: { x, y }, categoryId: currentMenuItem.id };
+            const counterRotateAngle = -rotationDegrees;
+            return { buttonText: item.name, buttonId: item.id, position: { x, y }, counterRotateAngle, categoryId: currentMenuItem.id };
         });
 
+
+        setRotationDegrees(getRotationDegrees(dateItemsLength, currentMenuItem.id, rotationDegrees, activeItem.id))
         setMenuItems(positionedItems);
-    }, [currentMenuItem, activeItem]);
+    }, [activeItem, dateItems]);
 
     const handleClick = (itemId: number) => {
-        const dateItemsLength = dateItems.length
         // const dateItemIndex = dateItems.findIndex((item) => item.id === itemId)
         const selectedItem = dateItems.find((item) => item.id === itemId && activeItem.id !== itemId);
         if (selectedItem) {
@@ -119,6 +123,7 @@ const CircleMenu: React.FC<CircleMenuProps> = ({
                             isActive={currentMenuItem?.id === item.buttonId}
                             onClick={() => handleClick(item.buttonId)}
                             position={item.position}
+                            counterRotateAngle={-rotationDegrees}
                         />
                     ))}
                 </Styled.CircularMenu>

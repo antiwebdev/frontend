@@ -21,12 +21,15 @@ export const CircularMenu = styled.div`
   width: 530px;
   height: 530px;
   border-radius: 50%;
-  border: 1px solid #42567A; // Добавлено для визуализации
-
+  border: 1px solid #42567A; 
   @media screen and (max-width: 1000px) {
     width: 100vw;
     height: 200px;
     border: 0;
+  }
+
+  @media (max-width: 1024px) {
+    display: none; 
   }
 `;
 
@@ -92,6 +95,12 @@ export const Years = styled.div`
   align-items: center;
   justify-content: center;
   outline: none;
+
+
+  @media (max-width: 1024px) {
+    top: 20%;
+  }
+  
 
   b {
     margin: 40px;
