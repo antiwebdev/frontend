@@ -98,7 +98,7 @@ export const Years = styled.div`
 
 
   @media (max-width: 1024px) {
-    top: 20%;
+    top: 30%;
   }
   
 

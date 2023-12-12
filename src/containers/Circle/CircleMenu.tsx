@@ -30,24 +30,9 @@ interface MenuItemType {
     counterRotateAngle: number;
 }
 
-const getRotationDegrees = (length: number, index: number, currentDegrees: number, activeItemId: number):number => {
-    if (index > activeItemId) {
-        return currentDegrees - (360/length) * (index - activeItemId)
-    }
-    return currentDegrees + (360/length) * (activeItemId - index)
-
-
-    // const value = (360/length) * (length - index)
-    // if (value === 360 && currentDegrees < 180) {
-    //     return 0
-    // }
-    // console.log('1', value, currentDegrees)
-    // // if (value > 180 || currentDegrees < 0) {
-    // //     console.log('2', value - 360)
-    // //     return value - 360
-    // // }
-    // console.log('3', value)
-    // return value
+const getRotationDegrees = (length: number, activeIndex: number): number => {
+    // Вычисляем угол так, чтобы активный элемент был вверху
+    return -360 * activeIndex / length;
 }
 
 const CircleMenu: React.FC<CircleMenuProps> = ({
@@ -66,10 +51,10 @@ const CircleMenu: React.FC<CircleMenuProps> = ({
 
         gsap.context(() => {
             gsap.to(circle.current, { rotation: rotationDegrees });
-
+            console.log("Rotation degrees: ", rotationDegrees);
         }, container);
 
-    }, [rotationDegrees]);
+    }, [rotationDegrees, activeItem]);
 
     const currentMenuItem = dateItems.find((obj) => obj.id === activeItem.id);
 
@@ -81,7 +66,7 @@ const CircleMenu: React.FC<CircleMenuProps> = ({
         const radius = 50;
 
         const positionedItems = dateItems.map((item, i) => {
-            const angle = i * arc - (Math.PI / length);
+            const angle = i * arc ;
             const x = radius * Math.cos(angle);
             const y = radius * Math.sin(angle);
             const counterRotateAngle = -rotationDegrees;
@@ -89,16 +74,19 @@ const CircleMenu: React.FC<CircleMenuProps> = ({
         });
 
 
-        setRotationDegrees(getRotationDegrees(dateItemsLength, currentMenuItem.id, rotationDegrees, activeItem.id))
+        console.log("Active item updated in CircleMenu", activeItem);
+
+        const newDegrees = getRotationDegrees(dateItemsLength, activeItem.id);
+
+        setRotationDegrees(newDegrees);
         setMenuItems(positionedItems);
     }, [activeItem, dateItems]);
 
     const handleClick = (itemId: number) => {
-        // const dateItemIndex = dateItems.findIndex((item) => item.id === itemId)
         const selectedItem = dateItems.find((item) => item.id === itemId && activeItem.id !== itemId);
         if (selectedItem) {
             setActiveItem(selectedItem);
-            setRotationDegrees(getRotationDegrees(dateItemsLength, itemId, rotationDegrees, activeItem.id))
+            setRotationDegrees(getRotationDegrees(dateItemsLength, selectedItem.id))
         }
     };
 

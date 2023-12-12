@@ -2,19 +2,32 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
 padding-top: 100px;
-height: 400px;
+height: 100%;
 max-width: 100%;
 padding-left: 30px;
 
-@media (min-width: 1024px) {
+
+@media (min-width: 1024px){
   .swiper-pagination {
     display: none;
   }
 }
 
-@media (max-width: 1023px) {
-  .swiper-button {
-    display: none;
+@media (max-width: 1024px) {
+  margin-top:40%;
+
+  .swiper-button-prev,
+    .swiper-button-next {
+      display: none;
+  }
+
+  .swiper-pagination {
+    display: block
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
   }
 }
 
@@ -25,9 +38,11 @@ padding-left: 30px;
 `;
 
 export const SwiperSlide = styled.div`
-  height: 135px;
+  height: 270px;
   width: 70%;
-  padding-left: 80px;
+  padding-left: 10%;
+  margin-bottom: 20%;
+  
 `
 
 export const Title = styled.div`

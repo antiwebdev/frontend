@@ -22,6 +22,7 @@ const Navigation: React.FC<NavigationProps> = ({
 
     const goBack = () => {
         const newIndex = activeItem.id === 1 ? dateItems.length-1 : activeItem.id - 2;
+        console.log("New index in Navigation: ", newIndex);
         setActiveItem(dateItems[newIndex]);
     };
 
